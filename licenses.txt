@@ -1,0 +1,7 @@
+auto_oculus_touch.dll is part of AutoOculusTouch
+
+AutoOculusTouch - Helper library to provide AutoHotKey with Oculus Touch state.
+Copyright (C) 2018 Kojack (rajetic@gmail.com)
+
+AutoOculusTouch is released under the MIT License  
+https://opensource.org/licenses/MIT

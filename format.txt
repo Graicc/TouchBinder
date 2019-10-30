@@ -1,0 +1,39 @@
+type|button,type|button,key
+
+{
+	{key, {type, button}, {type, button}},
+	{key, {type, button}, {type, button}},
+	{key, {type, button}, {type, button}},
+	{key, {type, button}, {type, button}},
+}
+
+key: ^#{Right}
+type:
+	00: bDown
+	01: bPressed
+	02: bReleased
+	10: tDown
+	11: tPressed
+	12: tReleased
+
+button: int of mask
+ * bA
+ * bB
+ * bX
+ * bY
+ * bRThumb
+ * bLThumb
+ * bMenu
+ * tA
+ * tB
+ * tX
+ * tY
+ * tRThumb
+ * tLThumb
+ * tRThumbRest
+ * tRIndexTrigger
+ * tLThumbRest
+ * tLIndexTrigger
+
+
+
