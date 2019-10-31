@@ -1,0 +1,104 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>TouchBinder Creator</title>
+	<style>
+		.pair {
+			display: inline;
+		}
+	</style>
+	<script>
+		function AddRow() {
+			//alert(elem.parentNode.children.length)
+
+			form = document.getElementById('form');
+			form.insertAdjacentHTML('afterbegin', `
+<div>
+	<button type="button" onclick="AddColumn(this)">+</button>
+	<input type="text" id="keys" value="keys" />
+</div>
+`);	
+			AddColumn(form.children[0].children[0]);
+		}
+
+		function AddColumn(elem) {
+			elem.parentNode.insertAdjacentHTML('afterbegin', `
+<div class="pair">
+	<select name="Input Type" id="type">
+		<option value="bPressed" selected>Button Pressed</option>
+		<option value="bReleased">Button Released</option>
+		<option value="bDown">Button Down</option>
+		<option value="tPressed">Touch Pressed</option>
+		<option value="tReleased">Touch Released</option>
+		<option value="tDown">Touch Down</option>
+	</select>
+	<select name="Input Button" id="button">
+		<option value="bA">A</option>
+		<option value="bB">B</option>
+		<option value="bX">X</option>
+		<option value="bY">Y</option>
+		<option value="bMenu">Menu</option>
+		<option value="bRThumb">Right Thumbstick Click</option>
+		<option value="bLThumb">Left Thumbstick Click</option>
+		<option value="tLThumbRest">TOUCH ONLY Left Thumb Rest </option>
+		<option value="tRThumbRest">TOUCH ONLY Right Thumb Rest </option>
+	</select>
+</div>		
+`);
+
+		}
+		
+		function Submit() {
+			form = document.getElementById('form');
+			rows = form.querySelectorAll(':scope > div');
+			
+			fullText = ""
+			for (var i = 0; i < rows.length; i++) {
+				var row = rows[i];
+
+				var text = ""
+
+				columns = row.querySelectorAll(':scope > .pair');
+				for (var j = 0; j < columns.length; j++) {
+					var column = columns[j];
+					text += column.querySelector('#type').value + "|" + column.querySelector('#button').value + ",";
+				}
+
+				keys = row.querySelector(':scope > #keys').value;
+				text += keys
+				fullText += text + "\r\n"
+			}
+
+			var link = document.getElementById('downloadlink');
+   		link.href = makeTextFile(fullText);
+   		link.style.display = 'block';
+		}
+		
+		var textFile = null
+		makeTextFile = function (text) {
+			var data = new Blob([text], {type: 'text/plain'});
+
+			if (textFile !== null) {
+				window.URL.revokeObjectURL(textFile);
+			}
+
+			textFile = window.URL.createObjectURL(data);
+
+			return textFile;
+		};
+
+		window.onload = function() {
+			AddRow();
+		};
+
+	</script>
+</head>
+<body>
+	<form id="form">
+		<button type="button" onclick="AddRow()" style="display: block;">New Binding</button>
+		<button type="button" onclick="Submit()" style="display: block;">Submit</button>
+	</form>
+	<a download="settings.txt" id="downloadlink" style="display: none">Download</a>
+
+</body>
+</html>
