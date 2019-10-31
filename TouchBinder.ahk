@@ -1,15 +1,18 @@
 #Singleinstance force
 hModule := DllCall("LoadLibrary", "Str", "auto_oculus_touch.dll", "Ptr")
 
-; TODO: remove in final build
-;Menu, tray, NoStandard
+Menu, tray, NoStandard
 Menu, tray, add, Reload, Reload
 Menu, tray, Default, Reload
 Reload() {
 	Reload
 }
+Menu, tray, add, Exit, Exit
+Exit() {
+	ExitApp
+}
 
-Menu, tray, add, Save, Save
+; Menu, tray, add, Save, Save
 
 Menu, Tray, Icon, icon.png
 
@@ -57,33 +60,31 @@ Load()
 	}
 }
 
-Save()
-{
-	global bindings
-	t := ""
-	for i, v in bindings
-	{
-		a := v[1]
-		loop % v.MaxIndex() - 1
-		{
-			t := t . v[A_Index + 1][1] . "|" . v[A_Index + 1][2]
-		}
-		t := t . "," . v[1]
-		if !(i = bindings.MaxIndex())
-		{
-			t := t . "`r`n"
-		}
-	}
+; Save()
+; {
+; 	global bindings
+; 	t := ""
+; 	for i, v in bindings
+; 	{
+; 		a := v[1]
+; 		loop % v.MaxIndex() - 1
+; 		{
+; 			t := t . v[A_Index + 1][1] . "|" . v[A_Index + 1][2]
+; 		}
+; 		t := t . "," . v[1]
+; 		if !(i = bindings.MaxIndex())
+; 		{
+; 			t := t . "`r`n"
+; 		}
+; 	}
 
-	FileDelete, settings.txt
-	FileAppend, %t%, settings.txt
+; 	FileDelete, settings.txt
+; 	FileAppend, %t%, settings.txt
 
-	Load()
-}
+; 	Load()
+; }
 
 Load()
-
-;bindings.Push(["{Left}",["bPressed","bB"]])
 
 Loop {
 	DllCall("auto_oculus_touch\poll")
@@ -124,4 +125,3 @@ Loop {
 
 	Sleep, 10
 }
-
