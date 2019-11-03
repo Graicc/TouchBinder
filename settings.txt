@@ -1,3 +1,0 @@
-tPressed|tLThumbRest,{LWin down}
-tReleased|tLThumbRest,{LWin up}
-bPressed|bB,{Left}

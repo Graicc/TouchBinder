@@ -39,6 +39,16 @@ tLThumb         := 0x00000400
 tLThumbRest     := 0x00000800
 tLIndexTrigger  := 0x00001000
 
+; Thumb Sticks
+sLUp     := 0x00000010
+sLDown   := 0x00000020
+sLLeft   := 0x00000040
+sLRight  := 0x00000080
+sRUp     := 0x00000001
+sRDown   := 0x00000002
+sRLeft   := 0x00000004
+sRRight  := 0x00000008
+
 ; Read Settings
 Load()
 {
@@ -89,9 +99,6 @@ Load()
 Loop {
 	DllCall("auto_oculus_touch\poll")
 
-	leftX := DllCall("auto_oculus_touch\getThumbStick", "Int", 0, "Int", 0, "Float")
-	leftY := DllCall("auto_oculus_touch\getThumbStick", "Int", 0, "Int", 1, "Float")
-
 	bDown := DllCall("auto_oculus_touch\getButtonsDown")
 	bPressed := DllCall("auto_oculus_touch\getButtonsPressed")
 	bReleased := DllCall("auto_oculus_touch\getButtonsReleased")
@@ -99,7 +106,38 @@ Loop {
 	tDown := DllCall("auto_oculus_touch\getTouchDown")
 	tPressed := DllCall("auto_oculus_touch\getTouchPressed")
 	tReleased := DllCall("auto_oculus_touch\getTouchReleased")
+
+	leftX := DllCall("auto_oculus_touch\getThumbStick", "Int", 0, "Int", 0, "Float")
+	leftY := DllCall("auto_oculus_touch\getThumbStick", "Int", 0, "Int", 1, "Float")
+	rightX := DllCall("auto_oculus_touch\getThumbStick", "Int", 1, "Int", 0, "Float")
+	rightY := DllCall("auto_oculus_touch\getThumbStick", "Int", 1, "Int", 1, "Float")
+
+	sDown := 0x00000000
+	sPressed := 0x00000000
+	sReleased := 0x00000000
 	
+	if LeftX < -0.5
+		sDown += sLLeft
+	if LeftX > 0.5
+		sDown += sLRight
+	if LeftY < -0.5
+		sDown += sLDown
+	if leftY > 0.5
+		sDown += sLUp
+	
+	if RightX < -0.5
+		sDown += sRLeft
+	if RightX > 0.5
+		sDown += sRRight
+	if RightY < -0.5
+		sDown += sRDown
+	if RightY > 0.5
+		sDown += sRUp
+
+	sPressed := sDown & ~lsDown
+	sReleased := ~sDown & lsDown
+	lsDown := sDown
+
 	for i, v in bindings
 	{
 		passed := True

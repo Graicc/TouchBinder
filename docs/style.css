@@ -1,0 +1,55 @@
+body {
+	font-family: sans-serif;
+	font-size: 13pt;
+	max-width: 1500px;
+	margin: 0px auto;
+	display: flex;
+	padding-top: 20px;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	display: inherit;
+	margin: 20px 0 5px 0;
+}
+
+a {
+	display: inline;
+	text-decoration: none;
+	color: inherit;
+	font-weight: bold;
+}
+
+.pair {
+	display: inline;
+}
+
+* {
+	margin: 2px;
+}	
+
+button, select, input {
+	font-size: inherit;
+}
+
+button {
+	background-color: transparent;
+  color: #000000;
+	border-width: 2px;
+	border-radius: 5px;
+	border-color: #000000;
+}
+
+#buffer {
+	height: 50px;
+}
+
+#left {
+	width: 30%;
+	margin-right: 10px;;
+}
+
+#right {
+	width: 60%;
+	padding-top: 50px;
+	margin-left: 10px;
+}
