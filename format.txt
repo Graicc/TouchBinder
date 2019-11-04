@@ -35,5 +35,12 @@ button: int of mask
  * tLThumbRest
  * tLIndexTrigger
 
-
-
+ ; Thumb Sticks
+sRUp     := 0x00000001
+sRDown   := 0x00000002
+sRLeft   := 0x00000004
+sRRight  := 0x00000008
+sLUp     := 0x00000010
+sLDown   := 0x00000020
+sLLeft   := 0x00000040
+sLRight  := 0x00000080

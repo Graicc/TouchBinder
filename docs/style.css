@@ -19,8 +19,17 @@ a {
 	font-weight: bold;
 }
 
+option:disabled {
+	display: none;
+}
+
+.row {
+	margin-bottom: 10px;;
+
+}
+
 .pair {
-	display: inline;
+	display: inline-block;
 }
 
 * {

@@ -3,7 +3,7 @@ function AddRow() {
 
 	form = document.getElementById('form');
 	form.insertAdjacentHTML('afterbegin', `
-<div>
+<div class="row">
 <button type="button" onclick="AddColumn(this)">+</button>
 <button type="button" onclick="RemoveColumn(this)">-</button>
 <input type="text" id="keys" value="keys" />
@@ -21,16 +21,15 @@ function RemoveRow() {
 function AddColumn(elem) {
 	elem.parentNode.insertAdjacentHTML('afterbegin', `
 <div class="pair">
-	<select name="Input Type" id="type">
-		<option value="bPressed" selected>Button Pressed</option>
-		<option value="bReleased">Button Released</option>
-		<option value="bDown">Button Down</option>
-		<option value="tPressed">Touch Pressed</option>
-		<option value="tReleased">Touch Released</option>
-		<option value="tDown">Touch Down</option>
-		<option value="sPressed">Stick Pressed</option>
-		<option value="sReleased">Stick Released</option>
-		<option value="sDown">Stick Down</option>
+	<select name="Input Type" id="type" onchange="InputChanged(this)">
+		<option value="b" selected>Button</option>
+		<option value="t">Touch</option>
+		<option value="s">Stick</option>
+	</select>
+	<select name="Input Edge" id="edge">
+		<option value="Pressed" selected>Pressed</option>
+		<option value="Released">Released</option>
+		<option value="Down">Down</option>
 	</select>
 	<select name="Input Button" id="button">
 		<option value="bA">A</option>
@@ -38,26 +37,44 @@ function AddColumn(elem) {
 		<option value="bX">X</option>
 		<option value="bY">Y</option>
 		<option value="bMenu">Menu</option>
-		<option value="bRThumb">Right Thumbstick Click</option>
-		<option value="bLThumb">Left Thumbstick Click</option>
-		<option value="tLThumbRest">TOUCH ONLY Left Thumb Rest</option>
-		<option value="tRThumbRest">TOUCH ONLY Right Thumb Rest</option>
-		<option value="sLUp">STICK ONLY Left Up</option>
-		<option value="sLDown">STICK ONLY Left Stick Down</option>
-		<option value="sLLeft">STICK ONLY Left Stick Left</option>
-		<option value="sLRight">STICK ONLY Left Stick Right</option>
-		<option value="sRUp">STICK ONLY Right Stick Up</option>
-		<option value="sRDown">STICK ONLY Right Stick Down</option>
-		<option value="sRLeft">STICK ONLY Right Stick Left</option>
-		<option value="sRRight">STICK ONLY Right Stick Right</option>
+		<option value="bLThumb">Left Thumbstick</option>
+		<option value="bRThumb">Right Thumbstick</option>
+		<option value="tLThumbRest">Left Thumb Rest</option>
+		<option value="tRThumbRest">Right Thumb Rest</option>
+		<option value="sLUp">Left Stick Up</option>
+		<option value="sLDown">Left Stick Down</option>
+		<option value="sLLeft">Left Stick Left</option>
+		<option value="sLRight">Left Stick Right</option>
+		<option value="sRUp">Right Stick Up</option>
+		<option value="sRDown">Right Stick Down</option>
+		<option value="sRLeft">Right Stick Left</option>
+		<option value="sRRight">Right Stick Right</option>
 	</select>
 </div>		
 `);
+
+	InputChanged(elem.parentNode.children[0].children[0]);
 }
 
 function RemoveColumn(elem) {
 	if (elem.parentNode.children.length > 4) {
 		elem.parentNode.removeChild(elem.parentNode.children[0]);
+	}
+}
+
+function InputChanged(elem) {
+	var buttonInput = elem.parentNode.querySelector("#button");
+	elemChar = elem.value.charAt(0);
+	for (var i = 0; i < buttonInput.children.length; i++) {
+		var option = buttonInput.children[i];
+		optionChar = option.value.charAt(0);
+		option.disabled = (elemChar != "t" && optionChar == "t") || 
+											(elemChar != "s" && optionChar == "s") ||
+											(elemChar == "s" && optionChar != "s");
+	}
+	var temp = buttonInput.value
+	if (buttonInput.querySelector(`[value=${temp}]`).disabled) {
+		buttonInput.value = buttonInput.querySelector(":not([disabled])").value;
 	}
 }
 
@@ -74,7 +91,7 @@ function Submit() {
 		columns = row.querySelectorAll(':scope > .pair');
 		for (var j = 0; j < columns.length; j++) {
 			var column = columns[j];
-			text += column.querySelector('#type').value + "|" + column.querySelector('#button').value + ",";
+			text += column.querySelector('#type').value + column.querySelector('#edge').value + "|" + column.querySelector('#button').value + ",";
 		}
 
 		keys = row.querySelector(':scope > #keys').value;
