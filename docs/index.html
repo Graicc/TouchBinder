@@ -8,20 +8,30 @@
 <body>
 	<div id="left">
 		<h2>Installation</h2>
-		<p>Download the latest TouchBinder.zip file from <a href="https://github.com/Graicc/TouchBinder/releases/latest">the GitHub</a>. After extracting the files, place your settings.txt file (made on the right) in the same folder as your executable. After running TouchBinder.exe, you will see a touch controller icon in the system tray. You can right click on this to exit the application.</p>
+		<p>Download the latest TouchBinder.zip file from <a href="https://github.com/Graicc/TouchBinder/releases/latest">the GitHub</a>. After extracting the files, place your settings.txt file (made to the right) in the same folder as your executable. After running TouchBinder.exe, you will see a touch controller icon in the system tray. You can right click on the icon to exit the application or reload the settings file.</p>
 		
 		<h2>Basic Use</h2>
-		<p>The first column lets you select what type of input you want. Pressed means once when the button is first pressed, released means once when the button is first released, and down means any time the button is pressed. The next collum lets you select the specific input you wish to use. The "+" and "-" buttons can be used to add more required inputs in order to create more complex actions. The text input box contains the keyboard events to be executed, as described in the formatting guide below.</p>
+		<p>
+			The first column lets you select what type of input you want.
+			Pressed means send the keys once when the button is first pressed, 
+			released means once when the button is first released, 
+			and down means any time the button is pressed. 
+			The next column lets you select the specific input you wish to use. The "+" and "-" buttons can be used to add more required inputs in order to create more complex actions. 
+			The text input box contains the keyboard events to be executed, as described in the formatting guide below.
+		</p>
 
 		<h2>Formatting Guide</h2>
-		<p>Key formating identical to ahk notation. See <a href="https://www.autohotkey.com/docs/commands/Send.htm">the official docs</a> for a full rundown. Here's a quick rundown</p>
+		<p>
+			Key formating is identical to ahk notation. 
+			See <a href="https://www.autohotkey.com/docs/commands/Send.htm">the official docs</a> for a full rundown. 
+			Here's a quick rundown:</p>
 		<ul>
-			<li>Use ^+!# for ctrl, shift, alt, and win</li>
+			<li>Use ^,+,!, and # for ctrl, shift, alt, and win respectively</li>
 			<li>Put special items in curly brackets</li>
 		</ul>
 		<p>Examples:</p>
 		<ul>
-			<li>^+a: Sends ctrl shift</li>
+			<li>^+a: Sends ctrl shift a</li>
 			<li>!{Tab}: Sends alt tab</li>
 			<li>{Media_Play_Pause}: Sends play/pause</li>
 		</ul>
