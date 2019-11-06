@@ -19,35 +19,36 @@ Menu, Tray, Icon, icon.png
 ; Start the Oculus sdk.
 DllCall("auto_oculus_touch\initOculus", "UInt") ;InitOculus()
 
-bA := 0x00000001
-bB := 0x00000002
+; Buttons
+bA      := 0x00000001
+bB      := 0x00000002
 bRThumb := 0x00000004
-bX := 0x00000100
-bY := 0x00000200
+bX      := 0x00000100
+bY      := 0x00000200
 bLThumb := 0x00000400
-bMenu := 0x00100000
-	
-; Capacitive Sensors
-tA              := 0x00000001
-tB              := 0x00000002
-tRThumb         := 0x00000004
-tRThumbRest     := 0x00000008
-tRIndexTrigger  := 0x00000010
-tX              := 0x00000100
-tY              := 0x00000200
-tLThumb         := 0x00000400
-tLThumbRest     := 0x00000800
-tLIndexTrigger  := 0x00001000
+bMenu   := 0x00100000
 
 ; Thumb Sticks
-sLUp     := 0x00000010
-sLDown   := 0x00000020
-sLLeft   := 0x00000040
-sLRight  := 0x00000080
-sRUp     := 0x00000001
-sRDown   := 0x00000002
-sRLeft   := 0x00000004
-sRRight  := 0x00000008
+bLUp    := 0x00001000
+bLDown  := 0x00002000
+bLLeft  := 0x00004000
+bLRight := 0x00008000
+bRUp    := 0x00010000
+bRDown  := 0x00020000
+bRLeft  := 0x00040000
+bRRight := 0x00080000
+
+; Grips / Trigers
+bLTrigger := 0x00000010
+bRTrigger := 0x00000020
+bLGrip    := 0x00000040
+bRGrip    := 0x00000080
+
+; Capacitive Sensors
+tRThumbRest := 0x00000008
+tLThumbRest := 0x00000800
+tLTrigger   := 0x00001000
+tRTrigger   := 0x00000010
 
 ; Read Settings
 Load()
@@ -70,38 +71,12 @@ Load()
 	}
 }
 
-; Save()
-; {
-; 	global bindings
-; 	t := ""
-; 	for i, v in bindings
-; 	{
-; 		a := v[1]
-; 		loop % v.MaxIndex() - 1
-; 		{
-; 			t := t . v[A_Index + 1][1] . "|" . v[A_Index + 1][2]
-; 		}
-; 		t := t . "," . v[1]
-; 		if !(i = bindings.MaxIndex())
-; 		{
-; 			t := t . "`r`n"
-; 		}
-; 	}
-
-; 	FileDelete, settings.txt
-; 	FileAppend, %t%, settings.txt
-
-; 	Load()
-; }
-
 Load()
 
 Loop {
 	DllCall("auto_oculus_touch\poll")
 
 	bDown := DllCall("auto_oculus_touch\getButtonsDown")
-	bPressed := DllCall("auto_oculus_touch\getButtonsPressed")
-	bReleased := DllCall("auto_oculus_touch\getButtonsReleased")
 
 	tDown := DllCall("auto_oculus_touch\getTouchDown")
 	tPressed := DllCall("auto_oculus_touch\getTouchPressed")
@@ -111,32 +86,43 @@ Loop {
 	leftY := DllCall("auto_oculus_touch\getThumbStick", "Int", 0, "Int", 1, "Float")
 	rightX := DllCall("auto_oculus_touch\getThumbStick", "Int", 1, "Int", 0, "Float")
 	rightY := DllCall("auto_oculus_touch\getThumbStick", "Int", 1, "Int", 1, "Float")
-
-	sDown := 0x00000000
-	sPressed := 0x00000000
-	sReleased := 0x00000000
 	
+	; Get thumbstick states
 	if LeftX < -0.5
-		sDown += sLLeft
+		bDown += bLLeft
 	if LeftX > 0.5
-		sDown += sLRight
+		bDown += bLRight
 	if LeftY < -0.5
-		sDown += sLDown
+		bDown += bLDown
 	if leftY > 0.5
-		sDown += sLUp
+		bDown += bLUp
 	
 	if RightX < -0.5
-		sDown += sRLeft
+		bDown += bRLeft
 	if RightX > 0.5
-		sDown += sRRight
+		bDown += bRRight
 	if RightY < -0.5
-		sDown += sRDown
+		bDown += bRDown
 	if RightY > 0.5
-		sDown += sRUp
+		bDown += bRUp
 
-	sPressed := sDown & ~lsDown
-	sReleased := ~sDown & lsDown
-	lsDown := sDown
+	; Get trigger / grip states
+	;DllCall("auto_oculus_touch\getTrigger", "Int", hand, "Int", trigger, "Float")
+	; 
+	if DllCall("auto_oculus_touch\getTrigger", "Int", 0, "Int", 0, "Float") > 0.7
+		bDown += bLTrigger
+	if DllCall("auto_oculus_touch\getTrigger", "Int", 1, "Int", 0, "Float") > 0.7
+		bDown += bRTrigger
+	
+	; Grips
+	if DllCall("auto_oculus_touch\getTrigger", "Int", 0, "Int", 1, "Float") > 0.7
+		bDown += bLGrip
+	if DllCall("auto_oculus_touch\getTrigger", "Int", 1, "Int", 1, "Float") > 0.7
+		bDown += bRGrip
+
+	bPressed := bDown & ~lbDown
+	bReleased := ~bDown & lbDown
+	lbDown := bDown
 
 	for i, v in bindings
 	{

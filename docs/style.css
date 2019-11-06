@@ -36,7 +36,7 @@ option:disabled {
 	margin: 2px;
 }	
 
-button, select, input {
+button, select, input, label {
 	font-size: inherit;
 }
 
@@ -46,6 +46,16 @@ button {
 	border-width: 2px;
 	border-radius: 5px;
 	border-color: #000000;
+}
+
+label {
+	margin-left: -5px;
+}
+
+input[type=checkbox] {
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
 }
 
 #buffer {

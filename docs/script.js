@@ -21,34 +21,43 @@ function RemoveRow() {
 function AddColumn(elem) {
 	elem.parentNode.insertAdjacentHTML('afterbegin', `
 <div class="pair">
-	<select name="Input Type" id="type" onchange="InputChanged(this)">
-		<option value="b" selected>Button</option>
-		<option value="t">Touch</option>
-		<option value="s">Stick</option>
-	</select>
+	<input name="Input Type" type="checkbox" id="type" onclick="InputChanged(this)">
+	<label for="type">Capacitive</label>
+
 	<select name="Input Edge" id="edge">
 		<option value="Pressed" selected>Pressed</option>
 		<option value="Released">Released</option>
 		<option value="Down">Down</option>
 	</select>
+
 	<select name="Input Button" id="button">
-		<option value="bA">A</option>
-		<option value="bB">B</option>
-		<option value="bX">X</option>
-		<option value="bY">Y</option>
-		<option value="bMenu">Menu</option>
-		<option value="bLThumb">Left Thumbstick</option>
-		<option value="bRThumb">Right Thumbstick</option>
-		<option value="tLThumbRest">Left Thumb Rest</option>
-		<option value="tRThumbRest">Right Thumb Rest</option>
-		<option value="sLUp">Left Stick Up</option>
-		<option value="sLDown">Left Stick Down</option>
-		<option value="sLLeft">Left Stick Left</option>
-		<option value="sLRight">Left Stick Right</option>
-		<option value="sRUp">Right Stick Up</option>
-		<option value="sRDown">Right Stick Down</option>
-		<option value="sRLeft">Right Stick Left</option>
-		<option value="sRRight">Right Stick Right</option>
+		<option value="bA">                          A                 </option>
+		<option value="bB">                          B                 </option>
+		<option value="bX">                          X                 </option>
+		<option value="bY">                          Y                 </option>
+
+		<option value="bMenu" class="bOnly">         Menu              </option>
+		<option value="bLTrig" class="bOnly">        Left Trigger      </option>
+		<option value="bRTrig" class="bOnly">        Right Trigger     </option>
+		<option value="bLGrip" class="bOnly">        Left Grip         </option>
+		<option value="bRGrip" class="bOnly">        Right Grip        </option>
+
+		<option value="bLThumb">                     Left Thumbstick   </option>
+		<option value="bRThumb">                     Right Thumbstick  </option>
+
+		<option value="bLUp" class="bOnly">          Left Stick Up     </option>
+		<option value="bLDown" class="bOnly">        Left Stick Down   </option>
+		<option value="bLLeft" class="bOnly">        Left Stick Left   </option>
+		<option value="bLRight" class="bOnly">       Left Stick Right  </option>
+		<option value="bRUp" class="bOnly">          Right Stick Up    </option>
+		<option value="bRDown" class="bOnly">        Right Stick Down  </option>
+		<option value="bRLeft" class="bOnly">        Right Stick Left  </option>
+		<option value="bRRight" class="bOnly">       Right Stick Right </option>
+
+		<option value="tLThumbRest" class="tOnly">   Left Thumb Rest   </option>
+		<option value="tRThumbRest" class="tOnly">   Right Thumb Rest  </option>
+		<option value="tLTrigger" class="tOnly">     Left Trigger      </option>
+		<option value="tRTrigger" class="tOnly">     Right Trigger     </option>
 	</select>
 </div>		
 `);
@@ -64,13 +73,13 @@ function RemoveColumn(elem) {
 
 function InputChanged(elem) {
 	var buttonInput = elem.parentNode.querySelector("#button");
-	elemChar = elem.value.charAt(0);
+	elemType = elem.checked;
 	for (var i = 0; i < buttonInput.children.length; i++) {
 		var option = buttonInput.children[i];
-		optionChar = option.value.charAt(0);
-		option.disabled = (elemChar != "t" && optionChar == "t") || 
-											(elemChar != "s" && optionChar == "s") ||
-											(elemChar == "s" && optionChar != "s");
+		optionChar = option.value;
+		optionType = option.className;
+		option.disabled = (!elemType && optionType == "tOnly") || 
+											(elemType && optionType == "bOnly")
 	}
 	var temp = buttonInput.value
 	if (buttonInput.querySelector(`[value=${temp}]`).disabled) {
@@ -91,7 +100,7 @@ function Submit() {
 		columns = row.querySelectorAll(':scope > .pair');
 		for (var j = 0; j < columns.length; j++) {
 			var column = columns[j];
-			text += column.querySelector('#type').value + column.querySelector('#edge').value + "|" + column.querySelector('#button').value + ",";
+			text += (column.querySelector('#type').checked ? "t" : "b") + column.querySelector('#edge').value + "|" + column.querySelector('#button').value + ",";
 		}
 
 		keys = row.querySelector(':scope > #keys').value;
