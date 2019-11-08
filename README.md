@@ -9,4 +9,4 @@ Send keyboard events from touch controllers.
 * Grip / Trigger support!
 
 ## Installation / Basic Use
-Download the latest TouchBinder.zip file from [the GitHub](https://github.com/Graicc/TouchBinder/releases/latest). After extracting the files, place your settings.txt file (made to the right) in the same folder as your executable. After running TouchBinder.exe, you will see a touch controller icon in the system tray. You can right click on the icon to exit the application or reload the settings file.
+Download the latest TouchBinder.zip file from [the GitHub](https://github.com/Graicc/TouchBinder/releases/latest). After extracting the files, place your settings.txt file made [here](https://graicc.github.io/TouchBinder/) in the same folder as your executable. After running TouchBinder.exe, you will see a touch controller icon in the system tray. You can right click on the icon to exit the application or reload the settings file.
