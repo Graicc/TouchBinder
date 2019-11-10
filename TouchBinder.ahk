@@ -53,9 +53,24 @@ tRTrigger   := 0x00000010
 ; Read Settings
 Load()
 {
-	FileRead, file, settings.txt
-	l := StrSplit(file, "`r`n")
 	global bindings := []
+	if (A_Args.Length() > 0)
+	{
+		for n, param in A_Args
+		{
+ 		  LoadFile(param)
+		}
+	} else
+	{
+		LoadFile("settings.txt")
+	}
+}
+
+LoadFile(filePath)
+{
+	global bindings
+	FileRead, file, %filePath%
+	l := StrSplit(file, "`r`n")
 	for i, v in l
 	{
 		if (v = "")
