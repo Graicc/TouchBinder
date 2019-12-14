@@ -23,6 +23,9 @@ function AddColumn(elem) {
 <div class="pair">
 	<input name="Input Type" type="checkbox" id="type" onclick="InputChanged(this)">
 	<label for="type">Capacitive</label>
+	<input name="Input Type" type="checkbox" id="not" onclick="InputChanged(this)">
+	<label for="not">Not</label>
+
 
 	<select name="Input Edge" id="edge">
 		<option value="Pressed" selected>Pressed</option>
@@ -100,7 +103,10 @@ function Submit() {
 		columns = row.querySelectorAll(':scope > .pair');
 		for (var j = 0; j < columns.length; j++) {
 			var column = columns[j];
-			text += (column.querySelector('#type').checked ? "t" : "b") + column.querySelector('#edge').value + "|" + column.querySelector('#button').value + ",";
+			text += (column.querySelector('#type').checked ? "t" : "b")
+						 + column.querySelector('#edge').value + "|"
+						 + column.querySelector('#button').value + "|"
+						 +(column.querySelector('#not').checked ? "1" : "0") + ",";
 		}
 
 		keys = row.querySelector(':scope > #keys').value;

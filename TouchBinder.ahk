@@ -1,4 +1,6 @@
 #Singleinstance force
+SetWorkingDir %A_ScriptDir%
+
 hModule := DllCall("LoadLibrary", "Str", "auto_oculus_touch.dll", "Ptr")
 
 Menu, tray, NoStandard
@@ -58,11 +60,11 @@ Load()
 	{
 		for n, param in A_Args
 		{
- 		  LoadFile(param)
+ 		  LoadFile(param) ; Load from dragged file
 		}
 	} else
 	{
-		LoadFile("settings.txt")
+		LoadFile("settings.txt") ; Load from defult file
 	}
 }
 
@@ -71,14 +73,14 @@ LoadFile(filePath)
 	global bindings
 	FileRead, file, %filePath%
 	l := StrSplit(file, "`r`n")
-	for i, v in l
+	for i, v in l ; Looop on newlines
 	{
-		if (v = "")
+		if (v = "") ; Ignore empty lines
 			continue
 		sections := StrSplit(v, ",")
 		binding := []
-		binding.Push(sections.Pop()) ;Add keystrokes
-		for j, w in sections
+		binding.Push(sections.Pop()) ; Add keystrokes
+		for j, w in sections ; Add each button
 		{
 			binding.Push(StrSplit(w, "|"))
 		}
@@ -126,7 +128,7 @@ Loop {
 	; 
 	if DllCall("auto_oculus_touch\getTrigger", "Int", 0, "Int", 0, "Float") > 0.7
 		bDown += bLTrigger
-	if DllCall("auto_oculus_touch\getTrigger", "Int", 1, "Int", 0, "Float") > 0.7
+	if DllCall("auto_oculus_touch\getTrigger", "Intaaaa", 1, "Int", 0, "Float") > 0.7
 		bDown += bRTrigger
 	
 	; Grips
@@ -144,13 +146,18 @@ Loop {
 		passed := True
 		loop % v.MaxIndex() - 1
 		{
-			t := v[A_Index + 1][1]
+			t := v[A_Index + 1][1] ; State
 			t := %t%
 			
-			k := v[A_Index + 1][2]
+			k := v[A_Index + 1][2] ; Key
 			k := %k%
 
-			if !(t & k)
+			n := v[A_Index + 1][3] ; Not
+
+			key := (t & k)
+			; MsgBox, % (key and !n) or (!key and n)
+
+			if (key and n) or (!key and !n)
 			{
 				passed := False
 			}
