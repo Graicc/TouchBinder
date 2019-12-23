@@ -119,7 +119,7 @@ function Submit() {
 	 link.style.display = 'block';
 }
 
-var textFile = null
+var textFile = null;
 makeTextFile = function (text) {
 	var data = new Blob([text], {type: 'text/plain'});
 
@@ -131,6 +131,69 @@ makeTextFile = function (text) {
 
 	return textFile;
 };
+
+function Load(files) {
+	// Add all of the files into a big string
+ lines = "";
+ for (var i = 0, f; f = files[i]; i++) {
+	 readFileContent(f).then(function(result) {
+		 lines = lines.concat(result, "\r\n");
+	 })
+ }
+ setTimeout(() => {
+	 lines = lines.split("\r\n");
+
+	 // Create binding object
+	 bindings = [];
+	 for (var i = 0, l; l = lines[i]; i++) {
+		 sections = l.split(",");
+		 binding = []
+		 binding.push(sections.pop());
+		 for (var j = 0, s; s = sections[j]; j++) {
+			 binding.push(s.split("|"));
+		 }
+		 bindings.push(binding);
+	 }
+
+	 // Clear out the current stuff
+	 while (form.children.length > 4) {
+		 RemoveRow();
+	 }
+
+	 // Import binding object
+	 for (var i = bindings.length - 1, b; b = bindings[i]; i--) { // Items are added from bottom to top so do it in reverse for consistency.
+		 // Create new row
+		 AddRow(document.getElementById("add"));
+		 row = document.getElementsByClassName("row")[0];
+
+		 // Add the correct number of columns
+		 for (var j = 2; j < b.length; j++) {
+			 AddColumn(row.childNodes[0]);
+		 }
+
+		 // Loop over each pair
+		 for (var j = 1, p; p = b[j]; j++) {
+			 pair = row.children[j-1];
+			 pair.children[0].checked = p[0][0] == "t"; // Capacitive
+			 pair.children[2].checked = p[2] == 1; // Not
+			 pair.children[4].value = p[0].slice(1); // Edge
+			 pair.children[5].value = p[1]; // Button
+		 }
+
+		 // Add keystrokes
+		 row.children[row.children.length - 1].value = b[0];
+	 }
+ }, 100);
+}
+
+function readFileContent(file) { // This is wizardry and i don't know how it works
+ const reader = new FileReader()
+ return new Promise((resolve, reject) => {
+	 reader.onload = event => resolve(event.target.result)
+	 reader.onerror = error => reject(error)
+	 reader.readAsText(file)
+ })
+}
 
 window.onload = function() {
 	AddRow();
