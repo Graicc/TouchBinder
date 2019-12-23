@@ -25,7 +25,11 @@ option:disabled {
 
 .row {
 	margin-bottom: 10px;;
-
+	padding: 5px;
+	border-width: 2px;
+	border-radius: 5px;
+	border-color: #000000;
+	border-style: solid;
 }
 
 .pair {
