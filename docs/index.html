@@ -9,11 +9,11 @@
 	<div id="left">
 		<h2>Installation</h2>
 		<p>
-			Download the latest TouchBinder.zip file from <a href="https://github.com/Graicc/TouchBinder/releases/latest">the GitHub</a>. 
-			After extracting the files, place your settings.txt file (made to the right) in the same folder as your executable. 
+			Download the latest TouchBinder.zip file from <a href="https://github.com/Graicc/TouchBinder/releases/latest">the GitHub release page</a>. 
+			After extracting the files, place your settings.txt file (made to the right) in the same folder as the executable. 
 			After running TouchBinder.exe, you will see a touch controller icon in the system tray. 
-			You can also drag and drop script(s) onto the executable to run them. 
-			You can right click on the icon to exit the application or reload the settings file.
+			You can right click on the tray icon to exit the application or reload the settings file.
+			You can also drag and drop scripts onto the executable to run them. 
 		</p>
 		
 		<h2>Basic Use</h2>
@@ -26,10 +26,10 @@
 			The text input box contains the keyboard events to be executed, as described in the formatting guide below.
 		</p>
 
-		<h2>Formatting Guide</h2>
+		<h2>Formatting</h2>
 		<p>
 			Key formating is identical to ahk notation. 
-			See <a href="https://www.autohotkey.com/docs/commands/Send.htm">the official docs</a> for a full rundown. 
+			See <a href="https://www.autohotkey.com/docs/commands/Send.htm">the AutoHotkey docs</a> for a full rundown. 
 			Here's a quick rundown:
 		</p>
 		<ul>
@@ -41,13 +41,13 @@
 			<li>^+a: Sends ctrl shift a</li>
 			<li>!{Tab}: Sends alt tab</li>
 			<li>{Media_Play_Pause}: Sends play/pause</li>
+			<li>{b down}: Holds b down until {b up}</li>
 		</ul>
 	</div>
 
 	<div id="right">
 		<form id="form">
-			<button type="button" onclick="AddRow()" id="add">New Binding</button>
-			<button type="button" onclick="RemoveRow()">Remove Binding</button>
+			<button type="button" onclick="AddRow(this)" id="add">+</button>
 			<button type="button" onclick="Submit()" style="display: block;">Generate File</button>
 			<input type="file" id="file" onchange="Load(this.files)" multiple>
 		</form>
