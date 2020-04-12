@@ -23,13 +23,16 @@ option:disabled {
 	display: none;
 }
 
+.row,.pair,button {
+	border-width: 2px;
+	border-radius: 5px;	
+	border-color: #000000;
+	border-style: solid;
+}
+
 .row {
 	margin-bottom: 10px;;
 	padding: 5px;
-	border-width: 2px;
-	border-radius: 5px;
-	border-color: #000000;
-	border-style: solid;
 }
 
 .pair {
@@ -47,9 +50,6 @@ button, select, input, label {
 button {
 	background-color: transparent;
   color: #000000;
-	border-width: 2px;
-	border-radius: 5px;
-	border-color: #000000;
 }
 
 label {

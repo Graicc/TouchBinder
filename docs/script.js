@@ -40,8 +40,8 @@ function AddColumn(elem) {
 		<option value="bY">                          Y                 </option>
 
 		<option value="bMenu" class="bOnly">         Menu              </option>
-		<option value="bLTrig" class="bOnly">        Left Trigger      </option>
-		<option value="bRTrig" class="bOnly">        Right Trigger     </option>
+		<option value="bLTrigger" class="bOnly">        Left Trigger      </option>
+		<option value="bRTrigger" class="bOnly">        Right Trigger     </option>
 		<option value="bLGrip" class="bOnly">        Left Grip         </option>
 		<option value="bRGrip" class="bOnly">        Right Grip        </option>
 

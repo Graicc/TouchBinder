@@ -16,6 +16,7 @@ Exit() {
 
 ; Menu, tray, add, Save, Save
 
+; GET RID OF THIS IN RELEASES
 Menu, Tray, Icon, icon.png
 
 ; Start the Oculus sdk.
@@ -128,7 +129,7 @@ Loop {
 	; 
 	if DllCall("auto_oculus_touch\getTrigger", "Int", 0, "Int", 0, "Float") > 0.7
 		bDown += bLTrigger
-	if DllCall("auto_oculus_touch\getTrigger", "Intaaaa", 1, "Int", 0, "Float") > 0.7
+	if DllCall("auto_oculus_touch\getTrigger", "Int", 1, "Int", 0, "Float") > 0.7
 		bDown += bRTrigger
 	
 	; Grips
