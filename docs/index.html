@@ -47,11 +47,13 @@
 
 	<div id="right">
 		<form id="form">
-			<button type="button" onclick="AddRow(this)" id="add">+</button>
-			<button type="button" onclick="Submit()" style="display: block;">Generate File</button>
-			<input type="file" id="file" onchange="Load(this.files)" multiple>
+			<button type="button" onclick="AddRow()" id="add" title="Add Row">+</button>
+			<button type="button" onclick="Submit()" id="SubmitButton" title="Generate File">Generate File</button>
+			<input type="checkbox" id="overwrite" title="Overwrite Load" checked>
+			<label for="overwrite">Overwrite Load</label>
+			<input type="file" id="file" onchange="Load(this.files)" multiple title="Load Files">
+			<a download="settings.txt" id="downloadlink" style="display: none">Download File</a>
 		</form>
-		<a download="settings.txt" id="downloadlink" style="display: none">Download File</a>
 	</div>
 </body>
 </html>
